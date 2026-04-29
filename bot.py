@@ -2,9 +2,10 @@ import os
 import requests
 import stripe
 from flask import Flask, request
-
 import json
 from datetime import datetime, timedelta
+
+VIP_FILE = "vip_users.json"
 
 app = Flask(__name__)
 
