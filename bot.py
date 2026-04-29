@@ -83,7 +83,7 @@ def stripe_webhook():
 
         send_vip_message()
 
-return "ok", 200
+    return "ok", 200
 
 
 # ======================
