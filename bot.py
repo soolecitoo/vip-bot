@@ -92,6 +92,14 @@ def stripe_webhook():
 
         vips = load_vips()
 
+        # LIMPIAR VIP EXPIRADOS
+        for uid in list(vips.keys()):
+            expires = datetime.fromisoformat(vips[uid]["expires"])
+
+            if datetime.utcnow() > expires:
+                del vips[uid]
+
+        # crear VIP nuevo
         vips[user_id] = {
             "expires": (datetime.utcnow() + timedelta(days=30)).isoformat()
         }
