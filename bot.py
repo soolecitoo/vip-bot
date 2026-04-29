@@ -16,7 +16,7 @@ def send_vip_message():
     TELEGRAM_CHAT_ID = os.getenv("6072718946")
 
     print("TOKEN:", TELEGRAM_BOT_TOKEN)
-    print("CHAT_ID:" TELEGRAM_CHAT_ID)
+    print("CHAT_ID:", TELEGRAM_CHAT_ID)
 
     text = "Pago confirmado ✅ Bienvenido VIP 🔥\nAquí tienes tu acceso 👇\nhttps://t.me/soolecitooVIP"
 
