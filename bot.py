@@ -1,6 +1,6 @@
 import os
-import stripe
 import requests
+import stripe
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -16,12 +16,16 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 
 # ======================
-# TELEGRAM FUNCTION
+# TELEGRAM MESSAGE
 # ======================
 def send_vip_message():
+    print("ENVIANDO A TELEGRAM...")
+    print("TOKEN:", TELEGRAM_BOT_TOKEN)
+    print("CHAT:", TELEGRAM_CHAT_ID)
+
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
-    text = "Pago confirmado ✅ Bienvenido VIP 🔥\nAquí tienes tu acceso:\nhttps://t.me/soolecitooVIP."
+    text = "Pago confirmado ✅ Bienvenido VIP 🔥 Aquí tienes tu acceso:\nhttps://t.me/soolecitooVIP."
 
     response = requests.post(url, data={
         "chat_id": TELEGRAM_CHAT_ID,
@@ -49,16 +53,15 @@ def stripe_webhook():
         print("Webhook error:", str(e))
         return "invalid", 400
 
-    # SOLO PAGOS REALES
     if event["type"] == "checkout.session.completed":
-        print("Pago confirmado por Stripe")
+        print("Pago confirmado")
         send_vip_message()
 
     return "ok", 200
 
 
 # ======================
-# TEST ROUTE
+# HOME
 # ======================
 @app.route("/")
 def home():
@@ -66,7 +69,7 @@ def home():
 
 
 # ======================
-# START SERVER (RENDER)
+# START (RENDER)
 # ======================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
