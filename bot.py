@@ -7,6 +7,17 @@ from datetime import datetime, timedelta
 
 VIP_FILE = "vip_users.json"
 
+def load_vips():
+    try:
+        with open(VIP_FILE, "r") as f:
+            return json.load(f)
+    except:
+        return {}
+
+def save_vips(data):
+    with open(VIP_FILE, "w") as f:
+        json.dump(data, f)
+
 app = Flask(__name__)
 
 # ======================
