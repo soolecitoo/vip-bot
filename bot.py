@@ -69,10 +69,21 @@ def stripe_webhook():
         return "invalid", 400
 
     if event["type"] == "checkout.session.completed":
-        print("Pago confirmado")
+        session = event["data"]["object"]
+
+        user_id = session.get("customer_email")
+
+        vips = load_vips()
+
+        vips[user_id] = {
+            "expires": (datetime.utcnow() + timedelta(days=30)).isoformat()
+        }
+
+        save_vips(vips)
+
         send_vip_message()
 
-    return "ok", 200
+return "ok", 200
 
 
 # ======================
