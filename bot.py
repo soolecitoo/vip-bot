@@ -32,10 +32,19 @@ def send_vip_message():
 
 @app.route("/stripe-webhook", methods=["POST"])
 def stripe_webhook():
-    print("Evento recibido de Stripe")
+    payload = request.data
+    sig_header = request.headers.get("Stripe-Signature")
 
-    # AQUÍ SE ACTIVARÍA EL VIP
-    send_vip_message()
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except Exception as e:
+        print("Webhook inválido:", e)
+        return "error", 400
+
+    if event["type"] == "checkout.session.completed":
+        send_vip_message()
 
     return "ok", 200
 
