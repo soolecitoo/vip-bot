@@ -46,10 +46,14 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 # ======================
 # TELEGRAM MESSAGE
 # ======================
-def send_vip_message():
+def send_vip_message(user_id):
     print("ENVIANDO A TELEGRAM...")
     print("TOKEN:", TELEGRAM_BOT_TOKEN)
     print("CHAT:", TELEGRAM_CHAT_ID)
+
+    if not is_vip(user_id):
+        print("Usuario no VIP o expirado")
+        return
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
@@ -94,7 +98,7 @@ def stripe_webhook():
 
         save_vips(vips)
 
-        send_vip_message()
+        send_vip_message(user_id)
 
     return "ok", 200
 
