@@ -18,6 +18,19 @@ def save_vips(data):
     with open(VIP_FILE, "w") as f:
         json.dump(data, f)
 
+def is_vip(user_id):
+    vips = load_vips()
+
+    if user_id not in vips:
+        return False
+
+    expires = datetime.fromisoformat(vips[user_id]["expires"])
+
+    if datetime.utcnow() > expires:
+        return False
+
+    return True
+
 app = Flask(__name__)
 
 # ======================
