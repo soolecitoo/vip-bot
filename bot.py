@@ -16,10 +16,12 @@ TELEGRAM_CHAT_ID = "6072718946"
 
 def send_vip_message():
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    
+
+    text = "Pago confirmado ✅ Bienvenido VIP 🔥\n\nAquí tienes tu acceso:\nhttps://t.me/soolecitooVIP"
+
     data = {
         "chat_id": TELEGRAM_CHAT_ID,
-        "text": "Pago confirmado ✅ Bienvenido a VIP 🔥"
+        "text": text
     }
 
     requests.post(url, data=data)
