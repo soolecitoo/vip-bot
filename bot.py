@@ -10,19 +10,24 @@ endpoint_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
 
 def send_vip_message():
     import requests
+    import os
 
     TELEGRAM_BOT_TOKEN = os.getenv("8143019679:AAHCymeh8b-P8aoRtL8NOVzWocKQbqK3vO4")
     TELEGRAM_CHAT_ID = os.getenv("6072718946")
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    print("TOKEN:", TELEGRAM_BOT_TOKEN)
+    print("CHAT_ID:" TELEGRAM_CHAT_ID)
 
     text = "Pago confirmado ✅ Bienvenido VIP 🔥\nAquí tienes tu acceso 👇\nhttps://t.me/soolecitooVIP"
 
-    requests.post(url, data={
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    
+    response =  requests.post(url, data={
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text
     })
 
+    print("RESPONSE:". response.text) 
 
 @app.route("/stripe-webhook", methods=["POST"])
 def stripe_webhook():
