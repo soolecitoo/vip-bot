@@ -90,6 +90,8 @@ def send_vip_message(user_id):
 # ======================
 @app.route("/stripe-webhook", methods=["POST"])
 def stripe_webhook():
+    print("🚀 WEBHOOK LLEGÓ")
+    print("DATA:", request.data)
     payload = request.data
     sig_header = request.headers.get("Stripe-Signature")
 
