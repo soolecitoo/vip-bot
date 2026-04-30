@@ -109,17 +109,15 @@ def stripe_webhook():
         print("Webhook error:", str(e))
         return "invalid", 400
 
-    if event.get("type") == "checkout.session.completed":
-        data = event.get("data")
-
-        if not isinstance(data, dict):
-            print("DATA INVALIDA:", data)
-            return "ok", 200
-
-        session = data.get("object", {})
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
 
         user_id = session.get("customer_email")
 
+        if not user_id:
+            print("NO HAY EMAIL")
+            return "ok", 200
+        
         vips = load_vips()
 
         # LIMPIAR VIP EXPIRADOS
