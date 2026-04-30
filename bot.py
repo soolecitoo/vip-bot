@@ -110,7 +110,13 @@ def stripe_webhook():
         return "invalid", 400
 
     if event.get("type") == "checkout.session.completed":
-        session = event.get("data", {}).get("object", {})
+        data = event.get("data")
+
+        if not isinstance(data, dict):
+            print("DATA INVALIDA:", data)
+            return "ok", 200
+
+        session = data.get("object", {})
 
         user_id = session.get("customer_email")
 
