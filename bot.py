@@ -109,8 +109,8 @@ def stripe_webhook():
         print("Webhook error:", str(e))
         return "invalid", 400
 
-    if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
+    if event.get("type") == "checkout.session.completed":
+        session = event.get("data", {}).get("object", {})
 
         user_id = session.get("customer_email")
 
