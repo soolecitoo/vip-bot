@@ -31,6 +31,30 @@ def is_vip(user_id):
 
     return True
 
+def kick_user(telegram_id):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/kickChatMember"
+
+    requests.post(url, data={
+        "chat_id": TELEGRAM_CHAT_ID,
+        "user_id": telegram_id
+    })
+
+def check_expired_users():
+    vips = load_vips()
+
+    for user_id in list(vips.keys()):
+        expires = datetime.fromisoformat(vips[user_id]["expires"])
+
+        if datetime.utcnow() > expires:
+            telegram_id = vips[user_id].get("telegram_id")
+
+            if telegram_id:
+                kick_user(telegram_id)
+
+            del vips[user_id]
+
+    save_vips(vips)
+    
 app = Flask(__name__)
 
 # ======================
@@ -107,6 +131,8 @@ def stripe_webhook():
         save_vips(vips)
 
         send_vip_message(user_id)
+
+    check_expired_users()
 
     return "ok", 200
 
