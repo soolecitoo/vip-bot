@@ -112,7 +112,7 @@ def stripe_webhook():
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
 
-        user_id = session.get("customer_email")
+        user_id = session["customer_email"] if "customer_email" in session else None
 
         if not user_id:
             print("NO HAY EMAIL")
