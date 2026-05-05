@@ -78,7 +78,7 @@ def send_vip_message(user_id):
     text = "Pago confirmado ✅ Bienvenido VIP 🔥 Aquí tienes tu acceso:\nhttps://t.me/soolecitooVIP"
 
     response = requests.post(url, data={
-        "chat_id": TELEGRAM_CHAT_ID,
+        "chat_id": user_id
         "text": text
     })
 
@@ -111,7 +111,7 @@ def stripe_webhook():
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
 
-        user_id = session["customer_email"] if "customer_email" in session else None
+        user_id = session["metadata"]["telegram_id"]
 
         if not user_id:
             print("NO HAY EMAIL")
@@ -138,6 +138,34 @@ def stripe_webhook():
     check_expired_users()
 
     return "ok", 200
+
+@app.route("/create-checkout", methods=["POST"])
+def create_checkout():
+    data = request.json
+    telegram_id = data["telegram_id"]
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[{
+            "price_data": {
+                "currency": "usd",
+                "product_data": {
+                    "name": "VIP Access"
+                },
+                "unit_amount": 1000
+            },
+            "quantity": 1
+        }],
+        mode="payment",
+        success_url="https://tusitio.com/success",
+        cancel_url="https://tusitio.com/cancel",
+
+        metadata={
+            "telegram_id": telegram_id
+        }
+    )
+
+    return {"url": session.url}
 
 
 # ======================
