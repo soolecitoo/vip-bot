@@ -96,13 +96,13 @@ def send_vip_message(user_id):
 def stripe_webhook():
     print("🔥 WEBHOOK HIT")
 
-    print("📦 RAW DATA:", request.data)
+    event = request.get_json()
 
-    try:
-        event = request.get_json()
-        print("📦 JSON:", event)
-    except Exception as e:
-        print("❌ JSON ERROR:", str(e))
+    obj = event.get("data", {}).get("object", {})
+
+    print("📌 EVENT TYPE:", event.get("type"))
+    print("📦 OBJECT:", obj)
+    print("🧾 METADATA:", obj.get("metadata"))
 
     return "ok", 200
 
