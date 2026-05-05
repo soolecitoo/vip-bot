@@ -119,8 +119,12 @@ def stripe_webhook():
         if not metadata:
             print("❌ No metadata")
             return "ok", 200
+
+        if "telegram_id" not in metadata:
+            print("❌ No telegram_id")
+            return "ok", 200
         
-        user_id = metadata.get("telegram_id")
+        user_id = metadata["telegram_id"]
 
         if not user_id:
             print("❌ No telegram_id")
