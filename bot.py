@@ -104,6 +104,24 @@ def stripe_webhook():
     print("📦 OBJECT:", obj)
     print("🧾 METADATA:", obj.get("metadata"))
 
+    telegram_id = obj.get("metadata", {}).get("telegram_id")
+
+    print("👤 TELEGRAM ID:", telegram_id)
+
+    if telegram_id:
+        import requests
+
+        url = f"https://api.telegram.org/botTU_BOT_TOKEN/sendMessage"
+
+        data = {
+            "chat_id": telegram_id,
+            "text": "💰 Pago confirmado. Bienvenido VIP 🚀"
+        }
+
+        requests.post(url, json=data)
+
+        print("📨 MENSAJE ENVIADO A TELEGRAM")
+
     return "ok", 200
 
     if event["type"] == "checkout.session.completed":
