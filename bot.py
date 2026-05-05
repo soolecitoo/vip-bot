@@ -93,23 +93,12 @@ def send_vip_message(user_id):
 # ======================
 @app.route("/stripe-webhook", methods=["POST"])
 def stripe_webhook():
-    print("🚀 WEBHOOK LLEGÓ")
-    print("DATA:", request.data)
-    payload = request.data
-    sig_header = request.headers.get("Stripe-Signature")
+    print("🔥 WEBHOOK HIT")
 
-    try:
-        event = stripe.Webhook.construct_event(
-            payload,
-            sig_header,
-            endpoint_secret
-        )
+    event = request.get_json()
+    print("📦 EVENT:", event)
 
-        print("🔥EVENTO STRIPE:", event["type"])
-              
-    except Exception as e:
-        print("Webhook error:", str(e))
-        return "invalid", 400
+    return "ok", 200
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
