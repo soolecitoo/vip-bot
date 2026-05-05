@@ -114,7 +114,7 @@ def stripe_webhook():
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
 
-        metadata = session.get("metadata", {})
+        metadata = getattr(session, "metadata", {})
         user_id = metadata.get("telegram_id")
 
         if not user_id:
