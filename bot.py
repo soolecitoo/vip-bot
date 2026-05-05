@@ -114,7 +114,12 @@ def stripe_webhook():
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
 
-        user_id = session["metadata"]["telegram_id"]
+        metadata = session.get("metadata", {})
+        user_id = metadata.get("telegram_id")
+
+        if not user_id:
+            print("❌ No telegram_id en metadata")
+            return "ok", 200
 
         if not user_id:
             print("NO HAY EMAIL")
