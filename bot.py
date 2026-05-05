@@ -77,10 +77,13 @@ def send_vip_message(user_id):
 
     text = "Pago confirmado ✅ Bienvenido VIP 🔥 Aquí tienes tu acceso:\nhttps://t.me/soolecitooVIP"
 
-    response = requests.post(url, data={
-        "chat_id": user_id
-        "text": text
-    })
+    response = requests.post(
+        url,
+        data={
+            "chat_id": user_id,
+            "text": text
+        }
+    )
 
     print("TELEGRAM RESPONSE:", response.text)
 
