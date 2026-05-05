@@ -116,6 +116,9 @@ def stripe_webhook():
 
         metadata = getattr(session, "metadata", None)
 
+        print("🔥 EVENT TYPE:", event["type"])
+        print("📦 METADATA:", metadata)
+
         if not metadata:
             print("❌ No metadata")
             return "ok", 200
@@ -127,8 +130,10 @@ def stripe_webhook():
         user_id = metadata["telegram_id"]
 
         if not user_id:
-            print("❌ No telegram_id")
+            print("❌ telegram_id vacío")
             return "ok", 200
+
+        print("👤 USER ID:", user_id)
             
         
         vips = load_vips()
