@@ -1,3 +1,4 @@
+print("🚨 ESTE ES BOT.PY REAL 🚨")
 import os
 import requests
 import stripe
