@@ -225,11 +225,6 @@ def ping():
     print("🔥 PING FUNCIONA")
     return "ok", 200
     
-@app.route("/ping")
-def ping():
-    print("🔥 PING FUNCIONA")
-    return "ok", 200
-    
     return {"url": session.url}
 
 
