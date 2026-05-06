@@ -173,8 +173,12 @@ def stripe_webhook():
 
 @app.route("/create-checkout", methods=["POST"])
 def create_checkout():
+    
     data = request.get_json()
     telegram_id = data.get("telegram_id")
+
+    print("📦 REQUEST DATA:", data)
+    print("👤 TELEGRAM ID RECIBIDO:", telegram_id)
 
     if not telegram_id:
         return {"error": "missing telegram_id"}, 400
