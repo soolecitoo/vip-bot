@@ -178,6 +178,8 @@ def create_checkout():
 
     if not telegram_id:
         return {"error": "missing telegram_id"}, 400
+
+    print("🚀 TELEGRAM ID ANTES DE STRIPE:", telegram_id)
     
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
