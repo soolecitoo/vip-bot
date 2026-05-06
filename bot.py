@@ -175,7 +175,7 @@ def stripe_webhook():
 def create_checkout():
     
     data = request.get_json()
-    telegram_id = data.get("telegram_id")
+    telegram_id = "123456789"
 
     print("📦 REQUEST DATA:", data)
     print("👤 TELEGRAM ID RECIBIDO:", telegram_id)
