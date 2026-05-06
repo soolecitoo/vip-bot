@@ -1,13 +1,11 @@
 import telebot
 import requests
+import os
 
-# 🔑 PON AQUÍ TU TOKEN REAL DE TELEGRAM
-BOT_TOKEN = "TU_TELEGRAM_BOT_TOKEN"
-
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# 🌐 URL DE TU BACKEND EN RENDER
-BACKEND_URL = "https://TU-RENDER.onrender.com/create-checkout"
+BACKEND_URL = "https://vip-bot-1q8u.onrender.com/create-checkout"
 
 
 @bot.message_handler(commands=['start'])
