@@ -28,6 +28,7 @@ def pay(message):
         json={
             "telegram_id": str(telegram_id)
         }
+    )
 
 if response.status_code != 200:
     bot.send_message(message.chat.id, "❌ Error en servidor")
