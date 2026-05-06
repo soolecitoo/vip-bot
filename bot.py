@@ -6,6 +6,8 @@ from flask import Flask, request, jsonify
 import json
 from datetime import datetime, timedelta
 
+app = Flask(__name__)
+
 VIP_FILE = "vip_users.json"
 
 def load_vips():
@@ -56,7 +58,6 @@ def check_expired_users():
 
     save_vips(vips)
     
-app = Flask(__name__)
 
 # ======================
 # CONFIG (Render ENV)
@@ -198,8 +199,8 @@ def create_checkout():
             "quantity": 1
         }],
         mode="payment",
-        success_url="https://tusitio.com/success",
-        cancel_url="https://tusitio.com/cancel",
+        success_url="https://vip-bot-1q8u.onrender.com/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url="https://vip-bot-1q8u.onrender.com/cancel"
 
         metadata={
             "telegram_id": telegram_id
@@ -207,6 +208,24 @@ def create_checkout():
     )
 
     return jsonify({"url": session.url})
+
+return jsonify({"url": session.url})
+
+
+@app.route("/success")
+def success():
+    return "🎉 Pago exitoso. Bienvenido al VIP"
+
+
+@app.route("/cancel")
+def cancel():
+    return "❌ Pago cancelado. Intenta nuevamente"
+
+
+@app.route("/ping")
+def ping():
+    print("🔥 PING FUNCIONA")
+    return "ok", 200
     
 @app.route("/ping")
 def ping():
