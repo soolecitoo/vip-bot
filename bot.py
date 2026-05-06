@@ -200,7 +200,7 @@ def create_checkout():
         }],
         mode="payment",
         success_url="https://vip-bot-1q8u.onrender.com/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url="https://vip-bot-1q8u.onrender.com/cancel"
+        cancel_url="https://vip-bot-1q8u.onrender.com/cancel",
 
         metadata={
             "telegram_id": telegram_id
