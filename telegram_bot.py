@@ -45,4 +45,4 @@ def pay(message):
 
 
 # ▶️ INICIAR BOT
-bot.polling()
+bot.infinity_polling(skip_pending=True)
