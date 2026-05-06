@@ -2,7 +2,7 @@ print("🚨 ESTE ES BOT.PY REAL 🚨")
 import os
 import requests
 import stripe
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 from datetime import datetime, timedelta
 
