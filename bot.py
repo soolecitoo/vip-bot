@@ -181,7 +181,7 @@ def create_checkout():
     print("👤 TELEGRAM ID RECIBIDO:", telegram_id)
 
     if not telegram_id:
-        return {"error": "missing telegram_id"}, 400
+        return jsonify({"error": "missing telegram_id"}), 400
 
     print("🚀 TELEGRAM ID ANTES DE STRIPE:", telegram_id)
     
@@ -206,6 +206,8 @@ def create_checkout():
         }
     )
 
+    return jsonify({"url": session.url})
+    
 @app.route("/ping")
 def ping():
     print("🔥 PING FUNCIONA")
