@@ -20,8 +20,14 @@ def start(message):
 def pay(message):
 
     telegram_id = message.chat.id
-
+    
     print("📲 Telegram ID:", telegram_id)
+
+    response = requests.post(
+        BACKEND_URL,
+        json={
+            "telegram_id": str(telegram_id)
+        }
 
 if response.status_code != 200:
     bot.send_message(message.chat.id, "❌ Error en servidor")
