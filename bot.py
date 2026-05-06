@@ -209,8 +209,6 @@ def create_checkout():
 
     return jsonify({"url": session.url})
 
-return jsonify({"url": session.url})
-
 
 @app.route("/success")
 def success():
