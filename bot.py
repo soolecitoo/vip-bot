@@ -209,6 +209,39 @@ def create_checkout():
 
     return jsonify({"url": session.url})
 
+@app.route("/webhook", methods=["POST"])
+def stripe_webhook():
+    import stripe
+
+    payload = request.data
+    sig_header = request.headers.get("Stripe-Signature")
+
+    endpoint_secret = "TU_WEBHOOK_SECRET"
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except Exception as e:
+        print("❌ Webhook error:", e)
+        return "error", 400
+
+    # 💳 PAGO COMPLETADO
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+
+        telegram_id = session["metadata"]["telegram_id"]
+
+        print("💰 PAGO CONFIRMADO:", telegram_id)
+
+        # 🔥 ENVIAR MENSAJE A TELEGRAM
+        bot.send_message(
+            telegram_id,
+            "🎉 Pago confirmado. Bienvenido al VIP 🔥"
+        )
+
+    return "ok", 200
+
 
 @app.route("/success")
 def success():
